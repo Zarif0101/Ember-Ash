@@ -1,0 +1,617 @@
+# 🔥 Ember & Ash — Complete Part-by-Part Build Prompts
+### Paste each chunk into a new message in the same Claude chat, in order.
+
+---
+
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## CHUNK 1 — Design System + Navbar + Hero
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+You are building **"Ember & Ash"** — a premium multi-cuisine restaurant website. This is Chunk 1 of 8. Do NOT build any other sections yet. Just this chunk. Keep all code in a single HTML file with embedded CSS and JS.
+
+---
+
+### 🎨 DESIGN SYSTEM (apply globally, every chunk will extend this)
+
+**Fonts — import from Google Fonts:**
+- Headings: `Cormorant Garamond` — weight 300, 400, 600, 700 (elegant, editorial serif)
+- Subheadings/labels: `Bebas Neue` — weight 400 (condensed, dramatic)
+- Body/UI: `DM Sans` — weight 300, 400, 500 (clean, refined)
+
+**Color tokens — define as CSS variables on :root:**
+```
+--bg-primary: #0d0d0d
+--bg-surface: #161616
+--bg-card: #1e1e1e
+--bg-card-hover: #252525
+--accent-gold: #c9a84c
+--accent-gold-dim: #c9a84c22
+--accent-red: #b83232
+--accent-red-dim: #b8323222
+--text-primary: #f0ece4
+--text-secondary: #8a8680
+--text-muted: #4a4845
+--border-subtle: #2a2825
+--border-glow: #c9a84c44
+--shadow-deep: 0 24px 60px rgba(0,0,0,0.7)
+--shadow-card: 0 8px 32px rgba(0,0,0,0.5)
+--radius-sm: 8px
+--radius-md: 16px
+--radius-lg: 24px
+--radius-pill: 100px
+```
+
+**Global rules:**
+- `box-sizing: border-box` on everything
+- Body background: `var(--bg-primary)`
+- Default text: `var(--text-primary)`, font `DM Sans`
+- Smooth scroll: `scroll-behavior: smooth`
+- All transitions: `transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1)`
+- Scrollbar: thin, dark styled (`scrollbar-width: thin; scrollbar-color: var(--accent-gold) var(--bg-surface)`)
+- Selection highlight: background `var(--accent-gold)`, color `#0d0d0d`
+
+---
+
+### 🧭 NAVBAR
+
+**Layout:** Fixed top, full width, `z-index: 1000`
+
+**Before scroll:** fully transparent, no background
+
+**After scrolling 60px:** background becomes `rgba(13,13,13,0.92)` with `backdrop-filter: blur(20px) saturate(180%)`, add `border-bottom: 1px solid var(--border-subtle)` — animate this transition smoothly
+
+**Inner layout (max-width 1280px, centered, 28px horizontal padding):**
+- Left: Logo — word "Ember" in `Cormorant Garamond` 700 italic, color `var(--accent-gold)`, font-size 28px, then " & Ash" in `Cormorant Garamond` 300, color `var(--text-primary)`. No icon needed — pure typographic logo.
+- Center: Nav links — `Home` `Menu` `About` `Contact` — `DM Sans` 400, 14px, letter-spacing 0.5px, color `var(--text-secondary)`. Hover: color slides to `var(--text-primary)` with a `2px` gold underline that animates width from 0% to 100% using a pseudo-element.
+- Right: 
+  - Cart icon button — SVG shopping bag icon, position relative, gold dot badge top-right showing item count (hidden when 0), circular badge 18px diameter, background `var(--accent-red)`, white text 10px
+  - "Order Now" button — pill shape, background `var(--accent-gold)`, color `#0d0d0d`, `DM Sans` 500, 13px, letter-spacing 1px, uppercase, 12px 24px padding. Hover: brightness 1.1, scale(1.03), shadow `0 0 20px var(--accent-gold)44`
+
+**Mobile (below 768px):** Hamburger menu icon right side, clicking opens full-screen overlay nav with centered links stacked vertically, large `Cormorant Garamond` 600 48px, staggered fade-in animation. Overlay background `rgba(13,13,13,0.97)` with blur.
+
+---
+
+### 🦸 HERO SECTION
+
+**Full viewport height** (`min-height: 100vh`), flex layout, centered content, relative positioning for floating elements.
+
+**Background:** Not just black. Use a radial gradient: `radial-gradient(ellipse 80% 60% at 65% 50%, #1a0a0a 0%, #0d0d0d 60%)` — subtle deep red warmth on the right where the food image will glow.
+
+**Decorative background texture:** Overlay a grain/noise texture using an SVG filter or CSS — subtle, not loud. Opacity 0.03.
+
+**Layout — two columns (60/40 split on desktop):**
+
+**LEFT COLUMN:**
+- Eyebrow label: `EMBER & ASH RESTAURANT` — `Bebas Neue`, 13px, letter-spacing 4px, color `var(--accent-gold)`, with a 32px gold line before and after (horizontal rule using pseudo-elements or flex)
+- Main headline: `"It's Not Just Food, It's a Ritual."` — `Cormorant Garamond` 700 italic, 88px on desktop, 52px on mobile, line-height 0.95, color `var(--text-primary)`. The word `"Ritual"` should be in `var(--accent-gold)`.
+- Sub-copy: `"From hand-rolled pasta to fire-kissed meats — every dish is crafted with obsession."` — `DM Sans` 300, 18px, color `var(--text-secondary)`, max-width 420px, margin-top 24px, line-height 1.7
+- CTA row (margin-top 40px, gap 16px):
+  - Primary button: `View Menu` — pill, background `var(--accent-gold)`, color `#0d0d0d`, `DM Sans` 500, 14px, uppercase, letter-spacing 1.5px, 16px 36px padding. Hover: glow shadow + scale.
+  - Secondary button: `Order Online` — pill, background transparent, border `1.5px solid var(--border-subtle)`, color `var(--text-primary)`. Hover: border color becomes `var(--accent-gold)`, text becomes gold.
+- Social proof row (margin-top 48px):
+  - 5 overlapping avatar circles (32px diameter, dark border 2px `var(--bg-primary)`, use gradient background placeholders instead of real photos — e.g. linear-gradient in warm skin tones)
+  - Text: `"4.9★"` in gold bold + `"from 2,400+ diners"` in muted — `DM Sans` 14px
+  - Tiny gold star row: 5 filled gold stars, 14px
+
+**RIGHT COLUMN:**
+- Large circular food image container: 520px × 520px on desktop. Use `<img>` with `src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600"` (restaurant dish photo). Image styled: `border-radius: 50%`, `object-fit: cover`, width & height 100%.
+- Behind the image: a glowing radial halo — `box-shadow: 0 0 120px 40px rgba(201, 168, 76, 0.15)` on the container, plus a pseudo-element circle of same size with `background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%)` positioned behind.
+- The container should float gently — CSS keyframe animation `@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }` — 6s infinite ease-in-out.
+
+**Floating badge cards (positioned absolutely, pointer-events none):**
+
+Badge 1 — TOP LEFT of food image (overlapping):
+- `position: absolute`, `top: 12%`, `left: 38%`
+- Card: background `var(--bg-card)`, border `1px solid var(--border-subtle)`, border-radius `var(--radius-md)`, padding 14px 18px, shadow `var(--shadow-card)`
+- Content: discount icon (🏷️ or SVG tag icon in gold) + `"5% OFF"` in `Bebas Neue` 22px gold + `"on orders above $40"` in `DM Sans` 11px muted
+- Entrance: fade + slide in from top after 0.8s delay
+
+Badge 2 — BOTTOM RIGHT of food image:
+- `position: absolute`, `bottom: 10%`, `right: 0%`
+- Same card style, wider
+- Content: fire icon + `"Most Ordered"` label in `Bebas Neue` 16px gold + dish name `"Truffle Wagyu Burger"` in `DM Sans` 13px white + `"⭐ 4.9 · 340 orders"` in 11px muted
+- Entrance: fade + slide in from right after 1.2s delay
+
+**Floating herb/ingredient decorations:**
+- 3–4 scattered leaf/spice SVG icons (simple vector basil leaves or pepper icons) positioned absolutely around the food image at different rotations and sizes (24px–48px), color `var(--accent-gold)` at opacity 0.3. Subtle rotation animation on each, different speeds.
+
+**Scroll indicator at bottom center of hero:**
+- Thin animated line pulse + `"SCROLL"` text in `Bebas Neue` 11px muted letter-spacing 4px
+- Line pulses downward using a CSS animation
+
+---
+
+### ⚡ ENTRANCE ANIMATIONS
+
+On page load, stagger these in sequence using `animation-delay`:
+1. Eyebrow label: fade in + slide up (0.2s delay)
+2. Headline: fade in + slide up, word by word using `animation-delay` on `<span>` wrapped words (0.4s–0.9s)
+3. Sub-copy: fade in (0.9s delay)
+4. CTA buttons: fade in + slide up (1.1s delay)
+5. Social proof: fade in (1.3s delay)
+6. Food image container: fade in + scale from 0.92 (0.6s delay)
+7. Floating badges: per above
+
+Use `@keyframes fadeUp { from { opacity:0; transform:translateY(24px) } to { opacity:1; transform:translateY(0) } }` and `@keyframes fadeIn { from {opacity:0} to {opacity:1} }`.
+
+All elements start with `opacity: 0` and get animation `forwards` fill mode.
+
+---
+
+**OUTPUT:** A complete single HTML file with the design system (CSS variables + global styles) + navbar + hero section. No other sections. Leave a comment `<!-- NEXT SECTIONS WILL BE ADDED HERE -->` after the hero. Make it pixel-perfect. Do not use any CSS frameworks.
+
+---
+
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## CHUNK 2 — Order Type Banner + Cuisine Filter Tabs + Featured Dishes Grid
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This is Chunk 2. Add these three sections to the existing file from Chunk 1. Replace the `<!-- NEXT SECTIONS WILL BE ADDED HERE -->` comment. Leave a new comment at the end for the next chunk. Do NOT redesign or touch the navbar or hero.
+
+---
+
+### 🚦 ORDER TYPE BANNER
+
+Full-width section, background `var(--bg-surface)`, `border-top: 1px solid var(--border-subtle)`, `border-bottom: 1px solid var(--border-subtle)`, padding 48px 0.
+
+Inner: max-width 1280px centered, 3 cards in a row (equal width, gap 2px, divided by thin vertical `var(--border-subtle)` lines).
+
+Each card:
+- Centered content, padding 36px 40px
+- Large icon top (SVG, 40px, color `var(--accent-gold)`)
+- Title: `Bebas Neue` 26px `var(--text-primary)` letter-spacing 2px, margin-top 16px
+- Description: `DM Sans` 14px `var(--text-secondary)` line-height 1.7, max-width 220px, centered
+- Card 1 — 🍽️ DINE IN: icon = plate/fork SVG. Text: "Scan the QR code at your table and order directly from your seat."
+- Card 2 — 🛍️ TAKE OUT: icon = bag SVG. Text: "Order online, we'll have it freshly packed and ready for pickup."
+- Card 3 — 🚗 DELIVERY: icon = car/bike SVG. Greyed out — all text at 40% opacity. Add a pill badge `"Coming Soon"` — border `1px solid var(--border-subtle)`, `DM Sans` 11px uppercase letter-spacing 2px, color `var(--text-muted)`, padding 4px 12px, border-radius pill, margin-top 8px.
+
+Hover effect on active cards (1 & 2): background becomes `var(--bg-card)`, a `1px` gold left-border appears (or subtle top border), and the icon gets a soft gold glow.
+
+---
+
+### 🗂️ CUISINE FILTER TABS
+
+Section with `var(--bg-primary)` background, padding-top 80px.
+
+Inner: max-width 1280px centered.
+
+Section header (centered):
+- Eyebrow: `EXPLORE BY CUISINE` — `Bebas Neue` 12px, letter-spacing 5px, `var(--accent-gold)`, margin-bottom 12px
+- Title: `"Every Craving, Satisfied."` — `Cormorant Garamond` 600, 52px, `var(--text-primary)`
+
+Tab bar (margin-top 48px):
+- Horizontally scrollable (hide scrollbar visually), centered on desktop
+- Pills: `All` `Italian` `Asian` `American` `Indian` `Mediterranean` `Desserts` `Drinks`
+- Default pill: `DM Sans` 13px, letter-spacing 0.5px, color `var(--text-secondary)`, background transparent, border `1px solid var(--border-subtle)`, padding 10px 22px, border-radius pill
+- Active pill: background `var(--accent-gold)`, color `#0d0d0d`, font-weight 500, border-color `var(--accent-gold)`
+- Hover (inactive): border-color `var(--accent-gold)44`, color `var(--text-primary)`
+- Clicking a tab filters the dish cards below (show/hide via JS `data-cuisine` attribute on each card). Animate filtered items with a quick fade + scale.
+
+---
+
+### 🍽️ FEATURED DISHES GRID
+
+Padding: 48px 0 96px. Max-width 1280px centered.
+
+**4-column responsive grid** (4 cols desktop, 3 cols 1100px, 2 cols 768px, 1 col 480px). `gap: 24px`.
+
+**Create 12 dish cards total** (3 per cuisine category: Italian, Asian, American, Indian). Each card has `data-cuisine="italian"` etc. for filtering.
+
+**Card anatomy:**
+- Background: `var(--bg-card)`, border-radius `var(--radius-lg)`, `overflow: hidden`, border `1px solid var(--border-subtle)`
+- Hover state: border-color `var(--border-glow)`, background `var(--bg-card-hover)`, shadow `0 16px 48px rgba(201,168,76,0.1)`, card lifts `translateY(-6px)` — all smooth transition
+- **Image area:** height 220px, `overflow: hidden`, relative positioning
+  - `<img>` covers 100%, `object-fit: cover`, `transition: transform 0.5s ease`. On card hover, image scales to 1.06.
+  - Use Unsplash images: Italian→ `https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400`, Asian→ `https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400`, American→ `https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400`, Indian→ `https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400` (reuse across cards in same category, they'll look slightly different due to crop)
+  - TOP LEFT: cuisine badge — small pill, background `rgba(13,13,13,0.75)` with `backdrop-filter: blur(8px)`, border `1px solid var(--border-subtle)`, `DM Sans` 11px uppercase letter-spacing 1px, color `var(--text-secondary)`, padding 5px 12px
+  - TOP RIGHT: Add to Cart button — circle 40px, background `var(--accent-gold)`, centered SVG cart/plus icon (#0d0d0d color). Initially at `opacity: 0; transform: scale(0.7)`. On **card hover**, appears: `opacity: 1; transform: scale(1)`. On button click: brief pulse animation + item added to cart state.
+- **Content area:** padding 20px 22px 24px
+  - Dish name: `Cormorant Garamond` 600, 22px, `var(--text-primary)`, line-height 1.2
+  - Description: `DM Sans` 13px, `var(--text-secondary)`, line-height 1.6, margin-top 6px, display `-webkit-box` with line-clamp 2 (truncate after 2 lines)
+  - Bottom row (margin-top 16px, flex space-between align-center):
+    - Price: `Bebas Neue` 24px `var(--accent-gold)` — e.g. `$18.00`
+    - Rating: gold star icon + `DM Sans` 13px `var(--text-secondary)` — e.g. `4.8 (120)`
+
+**12 dishes to use (make up realistic names and descriptions):**
+- Italian: Truffle Tagliatelle, Burrata & Heirloom, Osso Buco Milanese
+- Asian: Wagyu Ramen, Miso Black Cod, Peking Duck Bao
+- American: Smoked Wagyu Burger, BBQ Brisket Platter, Lobster Mac & Cheese
+- Indian: Lamb Rogan Josh, Butter Chicken Royale, Paneer Tikka Masala
+
+**Below the grid:**
+- Centered "View Full Menu →" button — outlined pill style, gold border, gold text, `DM Sans` 14px uppercase letter-spacing 2px, 14px 40px padding. Hover: filled gold background, color `#0d0d0d`.
+
+**JS for cart:** Create a `cart = []` array in JS. "Add to Cart" button pushes `{ name, price, qty: 1 }` to cart. Update the navbar badge count. Show a brief toast notification bottom-right: `"Added to cart ✓"` — dark card, gold checkmark, slides in and auto-dismisses after 2s.
+
+---
+
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## CHUNK 3 — Cart Drawer + Quick View Modal
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This is Chunk 3. Add the Cart Drawer and Quick View Modal to the existing file. These are overlay components — they don't sit in the page flow. Do NOT touch any existing sections.
+
+---
+
+### 🛒 CART DRAWER
+
+**Position:** Fixed right side, `top: 0`, `right: 0`, `height: 100vh`, `width: 420px` (100% on mobile), `z-index: 2000`
+
+**Background:** `var(--bg-surface)`, `border-left: 1px solid var(--border-subtle)`
+
+**Open/close:** Clicking cart icon in navbar toggles class `drawer-open`. Closed state: `transform: translateX(100%)`. Open state: `transform: translateX(0)`. Transition: `0.4s cubic-bezier(0.4, 0, 0.2, 1)`. Backdrop overlay: fixed full-screen, `background: rgba(0,0,0,0.6)`, `backdrop-filter: blur(4px)`, fades in/out, clicking it closes the drawer.
+
+**Drawer structure:**
+
+Header (sticky inside drawer):
+- Padding 24px 28px, border-bottom `1px solid var(--border-subtle)`, flex space-between
+- Left: `"Your Order"` — `Cormorant Garamond` 600 italic 28px
+- Right: X close button — 36px circle, `var(--bg-card)` bg, `var(--text-secondary)` color. Hover: gold color.
+
+Order type toggle (padding 20px 28px, border-bottom `1px solid var(--border-subtle)`):
+- Label: `DM Sans` 12px uppercase letter-spacing 2px `var(--text-muted)`, margin-bottom 12px: `ORDER TYPE`
+- Two toggle buttons side by side: `DINE IN` and `TAKE OUT` — each 50% width, 40px height, border `1px solid var(--border-subtle)`, `Bebas Neue` 16px letter-spacing 2px, border-radius `var(--radius-sm)`. Active: background `var(--accent-gold)`, color `#0d0d0d`, border-color `var(--accent-gold)`. Inactive: `var(--text-muted)`.
+- Below the toggle, conditionally shown:
+  - **Dine In:** Input field labeled `"Table Number"` — `DM Sans` 14px, dark input style with gold focus border, pre-filled if `?table=N` in URL
+  - **Take Out:** Two inputs: `"Your Name"` and `"Phone Number"` — same dark input style
+
+Cart items list (scrollable, flex-grow, overflow-y auto, padding 0 28px):
+- Each item row: flex, gap 16px, padding 18px 0, border-bottom `1px solid var(--border-subtle)`
+  - Image: 64px × 64px, border-radius `var(--radius-sm)`, object-fit cover
+  - Content: dish name in `DM Sans` 500 15px, price in `Bebas Neue` 18px `var(--accent-gold)`
+  - Right: quantity stepper — minus button, count, plus button. Circular 28px buttons, `var(--bg-card)` bg, gold text, border `1px solid var(--border-subtle)`. Below stepper: remove link in `var(--accent-red)` 12px.
+- Empty state (when no items): centered icon + `"Your cart is empty"` `Cormorant Garamond` italic 22px `var(--text-muted)` + `"Explore the menu and add something delicious."` + "View Menu" CTA
+
+Order summary (sticky at bottom of drawer):
+- Background `var(--bg-card)`, padding 24px 28px, border-top `1px solid var(--border-subtle)`
+- Lines: Subtotal, Tax (5%), then thick divider, **Total** — all `DM Sans` 14px, totals right-aligned. Total line: `Cormorant Garamond` 600 22px `var(--text-primary)`.
+- Place Order button: full width, 54px height, background `var(--accent-gold)`, color `#0d0d0d`, `Bebas Neue` 20px letter-spacing 3px, border-radius `var(--radius-md)`. Hover: glow shadow. On click: show success state (see below).
+
+**Success state (after Place Order):**
+- Replaces drawer content (no new page)
+- Centered: animated gold checkmark circle (CSS stroke animation drawing the check), then:
+- `"Order Placed!"` `Cormorant Garamond` 700 italic 42px
+- `"Estimated time: 25–35 minutes"` DM Sans 16px muted
+- Order reference: `#EMB-` + random 4-digit number, `Bebas Neue` 14px gold letter-spacing 3px
+- `"Back to Menu"` outlined button
+- Auto-clear cart array, reset badge to 0
+
+---
+
+### 🔍 QUICK VIEW MODAL
+
+Triggered by a "Quick View" button on each dish card (appears on hover alongside Add to Cart, bottom-left of image area — `DM Sans` 11px uppercase letter-spacing 1px, dark pill with blur background).
+
+**Modal:** Fixed centered, `z-index: 3000`, max-width 780px, width 90vw, max-height 90vh, `overflow: hidden`.
+
+Background: `var(--bg-surface)`, border `1px solid var(--border-subtle)`, border-radius `var(--radius-lg)`, shadow `var(--shadow-deep)`.
+
+Overlay backdrop: same as cart drawer.
+
+**Modal layout (two columns: 45% image / 55% content):**
+
+Left: full-height image, `object-fit: cover`, border-radius left corners only.
+
+Right: padding 36px 40px, overflow-y auto.
+- Cuisine tag badge (same pill style as cards)
+- Dish name: `Cormorant Garamond` 700 italic 40px, line-height 1.1
+- Rating row: stars + count `DM Sans` 14px
+- Divider: `1px solid var(--border-subtle)` margin 20px 0
+- Description: `DM Sans` 14px `var(--text-secondary)` line-height 1.8
+- "Key Ingredients" label + ingredient pills (e.g. Truffle, Pasta, Parmesan) — tiny pills, `var(--bg-card)`, `DM Sans` 12px, border `1px solid var(--border-subtle)`
+- Allergens note: `DM Sans` 12px italic `var(--text-muted)`, margin-top 12px
+- Quantity + Price row (margin-top 28px):
+  - Quantity stepper (same style as cart)
+  - Price: `Bebas Neue` 32px `var(--accent-gold)`, auto-updates with quantity
+- Add to Cart button: full width, same style as drawer Place Order button, `"ADD TO CART"` text. On click: item added, brief success flash (button turns green for 0.6s), modal can stay open.
+- X close button top-right corner, absolute positioned.
+
+**Entrance animation:** Backdrop fades in + modal scales from 0.92 + fades in, `0.3s cubic-bezier`.
+
+---
+
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## CHUNK 4 — Full Menu Page
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This is Chunk 4. Build the full Menu page as a separate `<section id="menu-page">` that is hidden by default (`display: none`). Add navigation logic: clicking "Menu" in navbar or "View Menu" / "View Full Menu" buttons sets `menuPage.style.display = 'block'` and hides the home page sections. Include a "← Back" breadcrumb to return home. Do NOT redesign any existing components.
+
+---
+
+### 📖 MENU PAGE LAYOUT
+
+Full-page layout with:
+- Sticky top bar (below navbar): breadcrumb `Home / Menu` — `DM Sans` 13px `var(--text-muted)`, padding 14px 40px, background `var(--bg-surface)`, border-bottom `1px solid var(--border-subtle)`
+- Search bar: centered, max-width 560px, margin 48px auto 0. Dark input, 52px height, border-radius pill, border `1px solid var(--border-subtle)`. Left: search SVG icon in gold. Placeholder: `"Search dishes, cuisines, ingredients..."` — `DM Sans` 14px `var(--text-muted)`. Focus: border-color `var(--accent-gold)`, subtle gold glow `box-shadow: 0 0 0 3px var(--accent-gold-dim)`. JS: filters all visible dish cards in real-time by name match.
+
+**Two-column layout** (max-width 1280px centered, padding 48px 40px 96px):
+
+**LEFT — sticky sidebar** (width 260px, sticky `top: 80px`, self-aligned to start):
+- Section title: `"CUISINES"` `Bebas Neue` 12px letter-spacing 5px `var(--accent-gold)`, margin-bottom 20px
+- Category list (vertical): All, Italian, Asian, American, Indian, Mediterranean, Desserts, Drinks
+  - Each: `DM Sans` 14px, padding 12px 16px, border-radius `var(--radius-sm)`, flex align-center, gap 12px
+  - Left: a 6px colored dot (each cuisine has a distinct color: Italian→tomato red, Asian→jade, American→amber, Indian→saffron, Mediterranean→sky blue, Desserts→rose, Drinks→teal)
+  - Right: item count badge — small pill `var(--bg-card)` `DM Sans` 11px `var(--text-muted)` e.g. `12`
+  - Active: background `var(--accent-gold-dim)`, left border `2px solid var(--accent-gold)`, color `var(--text-primary)`
+  - Hover: background `var(--bg-card)`
+- Divider then a "Filters" section with two toggles (styled checkboxes): `"Vegetarian Only"` and `"Under $20"` — `DM Sans` 14px, custom gold checkbox styling
+
+**RIGHT — dish sections** (flex-1, padding-left 48px):
+
+For each cuisine, a section block:
+- Section header: `Cormorant Garamond` 600 italic 42px `var(--text-primary)` + colored dot (same as sidebar) + `Bebas Neue` 13px letter-spacing 3px `var(--text-muted)` cuisine name right-aligned
+- `1px solid var(--border-subtle)` divider below
+- **3-column grid** of dish cards (same card component from Chunk 2, reused exactly)
+- Margin-bottom 64px before next section
+
+**Cuisines & dishes (6 per cuisine, 48 total):**
+
+Italian (6): Truffle Tagliatelle $28, Burrata & Heirloom Tomato $18, Osso Buco Milanese $42, Spaghetti Carbonara $22, Margherita Napoletana $16, Tiramisu $12
+
+Asian (6): Wagyu Ramen $32, Miso Black Cod $38, Peking Duck Bao $24, Pad Thai Royale $20, Dragon Roll Platter $36, Matcha Crème Brûlée $14
+
+American (6): Smoked Wagyu Burger $24, BBQ Brisket Platter $32, Lobster Mac & Cheese $28, Nashville Hot Chicken $22, Truffle Fries $12, NY Cheesecake $10
+
+Indian (6): Lamb Rogan Josh $26, Butter Chicken Royale $22, Paneer Tikka Masala $20, Dal Makhani $16, Garlic Naan Basket $8, Gulab Jamun $9
+
+Mediterranean (6): Grilled Halloumi $16, Lamb Kofta Platter $28, Hummus Mezze Board $18, Seafood Paella $44, Baklava $10, Turkish Coffee $7
+
+Desserts (6): Warm Chocolate Fondant $14, Crème Brûlée $12, Mango Sorbet $10, Affogato al Caffè $11, Berry Pavlova $13, Caramel Panna Cotta $12
+
+Drinks (6): Passion Fruit Mocktail $8, Sparkling Lychee $7, Mango Lassi $7, House Lemonade $6, Moroccan Mint Tea $5, Cold Brew Coffee $7
+
+**JS behavior:**
+- Clicking a sidebar category smoothly scrolls to that section on the right
+- Active sidebar item updates as user scrolls through sections (IntersectionObserver)
+- Search bar filters across ALL sections in real-time, hiding non-matching cards and hiding entire section blocks if 0 results
+- Vegetarian toggle hides non-veg items (mark Indian veg items + all Desserts + all Drinks as vegetarian via data-veg="true")
+- Under $20 toggle hides items above $20
+
+---
+
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## CHUNK 5 — QR Code Landing Screen
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This is Chunk 5. Add the QR landing screen as a separate full-page section `<section id="qr-landing">`. It is shown when the URL contains `?table=N`. On page load JS checks `URLSearchParams` — if `table` param exists, hide all other sections and show only this screen. Do NOT touch any existing sections.
+
+---
+
+### 📱 QR LANDING SCREEN
+
+**Full viewport height**, background `var(--bg-primary)`, flex column centered, padding 40px 24px.
+
+**Background:** A very subtle radial gradient: `radial-gradient(ellipse 60% 60% at 50% 40%, #1a0f00 0%, #0d0d0d 65%)` — warm amber ember glow center.
+
+**Top section (centered):**
+- Restaurant logo — `Cormorant Garamond` 700 italic 42px gold: `Ember & Ash`
+- Thin gold horizontal line 80px wide centered, margin 16px auto
+- `Bebas Neue` 13px letter-spacing 5px `var(--text-muted)`: `WELCOME`
+- Main: `Cormorant Garamond` 300 italic 56px `var(--text-primary)`, line-height 1.1: `"You're at"` then on new line `Cormorant Garamond` 700 italic 72px `var(--accent-gold)`: `"Table 7"` (number from URL param)
+- Sub: `DM Sans` 15px `var(--text-secondary)`: `"How would you like to order today?"`
+
+**Two large selection cards** (margin-top 48px, flex row on desktop, column on mobile, gap 20px, max-width 640px centered):
+
+Card style: background `var(--bg-card)`, border `1px solid var(--border-subtle)`, border-radius `var(--radius-lg)`, padding 40px 36px, text-align center, cursor pointer, flex-1.
+
+Hover + focus: border-color `var(--accent-gold)`, background `var(--bg-card-hover)`, transform `translateY(-4px)`, shadow `0 24px 60px rgba(201,168,76,0.12)`.
+
+Selected state (after click): border-color `var(--accent-gold)`, background `var(--accent-gold-dim)`, scale 1.02.
+
+Card 1 — DINE IN:
+- SVG icon: plate with dome cover, 64px, `var(--accent-gold)`
+- Title: `Bebas Neue` 32px letter-spacing 3px `var(--text-primary)`: `DINE IN`
+- Sub: `DM Sans` 14px `var(--text-secondary)` line-height 1.7: `"Order at your table and we'll bring it right to you."`
+- Tag pill: `"Table 7"` — small pill, gold border, gold text `DM Sans` 12px
+
+Card 2 — TAKE OUT:
+- SVG icon: shopping bag with handles, 64px, `var(--accent-gold)`
+- Title: `Bebas Neue` 32px letter-spacing 3px `var(--text-primary)`: `TAKE OUT`
+- Sub: `DM Sans` 14px `var(--text-secondary)` line-height 1.7: `"Order now and pick up at the counter when ready."`
+- Tag pill: `"Ready in 20 min"` — same pill style
+
+**CTA button** (appears after a card is selected, fade-in animation):
+- Full width max-width 640px centered, 56px height
+- `"EXPLORE THE MENU →"` — `Bebas Neue` 22px letter-spacing 3px, background `var(--accent-gold)`, color `#0d0d0d`, border-radius `var(--radius-md)`
+- On click: navigate to menu page, pre-set order type + table number in cart state
+
+**Bottom note:** `DM Sans` 12px italic `var(--text-muted)`: `"Need help? Flag down any of our staff or call Table Service at ext. 0"`
+
+**All touch targets minimum 56px height** — no hover-dependent interactions. Entrance: staggered fade-up animation for each element.
+
+---
+
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## CHUNK 6 — About Page
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This is Chunk 6. Add the About page as a section `<section id="about-page">`, hidden by default, shown when clicking "About" in the navbar. Add breadcrumb navigation. Do NOT touch any existing sections.
+
+---
+
+### ℹ️ ABOUT PAGE
+
+**Hero block:**
+- Full-width, height 480px, relative
+- Background image: `https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400` (restaurant interior), `object-fit: cover`, with a dark overlay `rgba(0,0,0,0.65)` and a gradient at bottom fading to `var(--bg-primary)`
+- Centered text over it:
+  - Eyebrow: `Bebas Neue` 12px letter-spacing 6px `var(--accent-gold)`: `OUR STORY`
+  - Headline: `Cormorant Garamond` 700 italic 72px `var(--text-primary)` line-height 1: `"Born from Fire,"`  then new line: `"Plated with Soul."`
+
+**Story section** (max-width 1280px centered, padding 80px 40px, two-column 55/45):
+Left:
+- `Cormorant Garamond` 600 40px `var(--text-primary)`: `"Where every dish tells a story"`
+- `DM Sans` 16px `var(--text-secondary)` line-height 1.9, margin-top 24px: write 3 short paragraphs about a fictional chef-founded restaurant born from a passion for world cuisine, no shortcuts, seasonal ingredients, intimate dining.
+- A blockquote styled element — left border 3px `var(--accent-gold)`, padding-left 24px, `Cormorant Garamond` italic 24px `var(--text-secondary)`: `"Food is the one language that needs no translation."`
+
+Right: A 2×2 mosaic of food/restaurant images using Unsplash, border-radius `var(--radius-md)`, gap 12px. Top-left image taller (rowspan). All images `object-fit: cover`.
+
+**Stats bar** (background `var(--bg-surface)`, border-top + bottom `1px solid var(--border-subtle)`, padding 48px 0):
+4 centered stats, divided by thin vertical lines:
+- `12` Cuisines Served
+- `80+` Signature Dishes
+- `4.9★` Average Rating
+- `Est. 2019`
+
+Each: number in `Bebas Neue` 56px `var(--accent-gold)`, label in `DM Sans` 14px uppercase letter-spacing 2px `var(--text-muted)` below.
+
+**Meet the Team** (padding 80px 40px, max-width 1280px centered):
+- Section header same style as before
+- 3 chef cards in a row, gap 24px
+- Each card: background `var(--bg-card)`, border `1px solid var(--border-subtle)`, border-radius `var(--radius-lg)`, `overflow: hidden`
+  - Image: 100% width, 280px height, `object-fit: cover`. Use Unsplash chef/cooking photos.
+  - Content padding 28px:
+    - Name: `Cormorant Garamond` 600 italic 26px
+    - Role: `Bebas Neue` 13px letter-spacing 3px `var(--accent-gold)`
+    - Bio: `DM Sans` 13px `var(--text-secondary)` line-height 1.7, 2 sentences
+- Chef 1: Marco Bellini, Executive Chef (Italian fine dining background)
+- Chef 2: Aiko Tanaka, Head of Asian Cuisine (Tokyo-trained)
+- Chef 3: Priya Menon, Pastry & Desserts (French pastry school graduate)
+
+---
+
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## CHUNK 7 — Contact Page + Footer
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This is Chunk 7. Add the Contact page section and the global Footer. Contact page is hidden by default, shown on "Contact" nav click. Footer appears on ALL pages (home, about, contact — but not QR landing screen).
+
+---
+
+### 📞 CONTACT PAGE
+
+**Page header** (same style as About — centered, `Cormorant Garamond` italic 64px, eyebrow label, no full-bleed image needed — just dark background with subtle grain):
+- `"Let's Talk Food"`
+
+**Two-column layout** (max-width 1100px centered, padding 80px 40px, gap 64px, 45/55 split):
+
+LEFT — Info:
+- `"Visit Us"` section: fire icon + address block: `Bebas Neue` 16px letter-spacing 2px gold label, below: `DM Sans` 15px `var(--text-primary)` address (make up: `12 Ember Lane, Midtown District`), then muted city/zip.
+- `"Hours"` section: same format. Mon–Fri 12:00–23:00, Sat–Sun 11:00–00:00. Today's hours highlighted with a `"Open Now"` green dot pill.
+- `"Contact"` section: phone + email, each a clickable link with hover gold color.
+- `"Follow Us"` section: 4 social icon buttons (Instagram, Facebook, Twitter/X, TikTok) — 40px circles, `var(--bg-card)` bg, `var(--text-secondary)` SVG icons. Hover: gold icon + border glow.
+
+RIGHT — Form:
+- `Cormorant Garamond` 600 italic 34px: `"Send us a message"`
+- `DM Sans` 14px `var(--text-secondary)`: `"We read every message and reply within 24 hours."`
+- Form fields (margin-top 32px, gap 20px, flex column):
+  - Name (full width)
+  - Email (full width)
+  - Subject dropdown: options — General Enquiry, Feedback, Private Events, Other. Custom dark styled select.
+  - Message textarea: 140px height, resize vertical only
+  - All fields: `DM Sans` 14px, background `var(--bg-card)`, border `1px solid var(--border-subtle)`, border-radius `var(--radius-md)`, padding 14px 18px, color `var(--text-primary)`, placeholder `var(--text-muted)`. Focus: border-color `var(--accent-gold)`, glow `0 0 0 3px var(--accent-gold-dim)`.
+  - Submit button: same gold pill style, `"SEND MESSAGE"` `Bebas Neue` 18px letter-spacing 3px, full width 52px height. On click (JS): validate fields, if valid show inline success message (`"Message sent! We'll be in touch soon. 🔥"` — fade in below the button, gold text). If invalid: shake animation on empty field borders turn red.
+
+---
+
+### 🦶 FOOTER
+
+Background `var(--bg-surface)`, border-top `1px solid var(--border-subtle)`, padding 64px 0 32px.
+
+Inner max-width 1280px centered, padding 0 40px.
+
+**Top row** (4 columns, gap 48px):
+
+Col 1 — Brand:
+- Logo text (same as navbar)
+- `DM Sans` 14px `var(--text-secondary)` line-height 1.8: `"A celebration of global cuisine,\ncrafted with fire and intention."`
+- Social icons row (same 40px circle style as contact page), margin-top 24px
+
+Col 2 — Quick Links:
+- `Bebas Neue` 13px letter-spacing 4px `var(--text-muted)` heading: `NAVIGATE`
+- Links: Home, Menu, About, Contact — `DM Sans` 14px `var(--text-secondary)`, hover gold, one per line, gap 12px
+
+Col 3 — Cuisine Menus:
+- `Bebas Neue` 13px letter-spacing 4px heading: `CUISINES`
+- Links: Italian, Asian, American, Indian, Mediterranean, Desserts — same style
+
+Col 4 — Newsletter:
+- `Bebas Neue` 13px letter-spacing 4px heading: `STAY IN THE LOOP`
+- `DM Sans` 14px `var(--text-secondary)`: `"Get our weekly specials and chef's picks."`
+- Email input + Subscribe button (inline, full width): dark input border-radius-left pill + gold submit button border-radius-right pill. Input focus: gold border. Button hover: glow.
+
+**Bottom row** (padding-top 32px, border-top `1px solid var(--border-subtle)`, margin-top 48px, flex space-between):
+- Left: `DM Sans` 13px `var(--text-muted)`: `"© 2024 Ember & Ash. All rights reserved."`
+- Right: two text links `Privacy Policy` · `Terms of Service` — same muted style
+
+---
+
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## CHUNK 8 — Final Polish & Integration
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This is the final chunk. Wire everything together and add final polish. Do NOT redesign anything — only fix, connect, and enhance.
+
+---
+
+### 🔗 NAVIGATION INTEGRATION
+
+Single-page app routing (no actual page reloads):
+
+Create a `showPage(pageId)` function that:
+1. Hides ALL sections: `#home-sections`, `#menu-page`, `#about-page`, `#contact-page`, `#qr-landing`
+2. Shows the target section with a fade-in (`opacity 0 → 1`, `0.3s`)
+3. Scrolls to top
+4. Updates active nav link
+5. Updates the browser URL using `history.pushState` (no reload): `/`, `/menu`, `/about`, `/contact`
+
+Wire up:
+- Navbar: Home→home, Menu→menu, About→about, Contact→contact
+- Hero "View Menu" → menu
+- Hero "Order Now" → opens cart drawer
+- "View Full Menu" button → menu
+- QR landing "Explore Menu" → menu with order type pre-set
+- About/Contact all cross-links
+- Footer links → respective pages
+- Mobile menu links → same as above + close mobile overlay
+
+On page load: check `window.location.pathname` and `URLSearchParams` to determine which page to show. If `?table=N` exists, show QR landing. Otherwise show home.
+
+---
+
+### ✨ SCROLL ANIMATIONS
+
+Use `IntersectionObserver` to add `class="visible"` to elements as they enter viewport. CSS:
+```css
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+```
+
+Apply `.reveal` to: section headers, dish cards (stagger with `transition-delay: calc(index * 0.08s)`), stat numbers, team cards, info blocks, footer columns.
+
+For stat numbers (About page): when they enter viewport, animate count-up from 0 to final value over 1.5s using `requestAnimationFrame`.
+
+---
+
+### 🎯 MICRO-INTERACTIONS & POLISH
+
+1. **Cursor:** Custom cursor — 12px gold circle follows mouse (`position: fixed`, `pointer-events: none`, `z-index: 9999`, smooth lag with `lerp` interpolation). On hovering links/buttons: cursor expands to 40px with lower opacity (blend mode `difference` if on light elements).
+
+2. **Page transitions:** Between pages, a thin gold progress line sweeps across the top (like NProgress) — `position: fixed; top: 0; left: 0; height: 2px; background: var(--accent-gold)` animates width 0→100% over 0.4s then fades out.
+
+3. **Cart badge animation:** When item is added, badge does a quick `scale(1.4) → scale(1)` pop with a gold ring ripple effect.
+
+4. **Button ripple:** On all primary buttons, clicking creates a circular ripple effect expanding from click point — CSS pseudo-element or JS-injected span.
+
+5. **Image loading:** All `<img>` tags get a `loading="lazy"` attribute + a `background: var(--bg-card)` placeholder color shown while loading.
+
+6. **Toast notifications:** Unified toast system — bottom-right, stacks multiple toasts, each auto-dismisses after 3s with a progress bar draining. Dark card, small icon left, message, X button.
+
+7. **Mobile responsiveness audit:**
+   - Navbar: hamburger below 768px ✓
+   - Hero: single column below 768px, font sizes reduced ✓
+   - Dish grid: responsive breakpoints ✓
+   - Cart drawer: full width on mobile ✓
+   - Menu sidebar: collapses to horizontal scroll tabs on mobile ✓
+   - QR landing: large touch targets ✓
+   - Footer: stack to single column below 640px ✓
+
+8. **Performance:** Debounce the search input handler (300ms). Use `will-change: transform` only on floating elements. Avoid layout thrash in animations.
+
+9. **Accessibility:** All interactive elements have `:focus-visible` ring in gold. Images have descriptive `alt` text. Buttons have `aria-label` where no text. Color contrast meets WCAG AA minimum.
+
+10. **Final check:** Ensure the cart persists across "page" changes (state lives in JS, not re-initialized on page switch). Ensure table number from QR param is visible in the cart drawer's Dine In field throughout the session.
+
+---
+
+*End of all prompts. The result should be a single polished HTML file, production-ready, with zero placeholder lorem ipsum in visible UI, zero purple gradients, and extraordinary attention to every pixel.*
